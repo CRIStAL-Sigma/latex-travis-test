@@ -1,3 +1,25 @@
+# The configurations you want to execute
+# That is, a combination of operating system and python version
+# Please add or remove for your needs.
+# Check all possible values for python in here: https://docs.travis-ci.com/user/languages/python/
+# See how to further configure the matrix of combinations in here: https://docs.travis-ci.com/user/multi-os/
+language: generic
+
+# Uncomment if you need super powers (e.g., for apt-get)
+# sudo: require
+
+# To use other python versions in osx, set the PYTHON variable with the version supported by pyenv.
+# Check available versions with `pyenv install --list'.
+# We use in this example python >=3.4 because matplotlib requires it
+os: linux
+
+install:
+  - . ./scripts/ensure_latex.sh
+  - ./scripts/ensure_book_dependencies.sh
+
+# Command to run tests. These are run for each configuration
+script:
+  - pdflatex paper.tex
 deploy:
   provider: releases
   api_key:
@@ -5,3 +27,4 @@ deploy:
   file: paper.pdf
   on:
     repo: CRIStAL-Sigma/latex-travis-test
+    tags: true
